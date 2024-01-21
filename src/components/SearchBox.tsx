@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function SearchBox() {
   const searchParams = useSearchParams();
-  const searchTerm = searchParams.get("searchTerms");
+  const searchTerm = searchParams.get("searchTerm");
   const [term, setTerm] = useState(searchTerm || "");
   const router = useRouter();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
