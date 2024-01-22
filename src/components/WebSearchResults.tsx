@@ -13,7 +13,7 @@ export default function WebSearchResults({ results }: any) {
       {results.items?.map((result: any) => (
         <div className="mb-8 max-w-xl" key={result.link}>
           <div className="group flex flex-col">
-            <Link className="text-sm truncate" href={result.link}>
+            <Link className="text-sm truncate text-[#093]" href={result.link}>
               {result.formattedUrl}
             </Link>
             <Link
