@@ -8,7 +8,6 @@ export default function HomeSearch() {
   const [input, setInput] = useState("");
   const [randomSearchLoading, setRandomSearchLoading] = useState(false);
   const router = useRouter();
-  console.log(input);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -20,7 +19,6 @@ export default function HomeSearch() {
       .then((res) => res.json())
       .then((data) => data[0]);
     if (!rsp) return;
-    console.log(rsp);
     router.push(`/search/web?searchTerm=${rsp}`);
     setRandomSearchLoading(false);
   };

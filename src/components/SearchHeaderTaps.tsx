@@ -7,7 +7,6 @@ export default function SearchHeaderTaps() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("searchTerm");
-  console.log(searchTerm);
   const selectTab = (tab: string) => {
     router.push(
       `/search/${tab === "Images" ? "image" : "web"}?searchTerm=${searchTerm}`
