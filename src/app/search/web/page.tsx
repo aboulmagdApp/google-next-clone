@@ -4,8 +4,9 @@ import React from "react";
 
 export default async function WebSearchPage({ searchParams }: any) {
   // await new Promise((resolve) => setTimeout(resolve, 10000));
+  const startIndex = searchParams.start || "1";
   const rsp = await fetch(
-    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParams.searchTerm}`
+    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParams.searchTerm}&start=${startIndex}`
   );
 
   if (!rsp.ok) {
