@@ -1,9 +1,8 @@
 import WebSearchResults from "@/components/WebSearchResults";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
-export default async function WebSearchPage({ searchParams }: any) {
-  //await new Promise((resolve) => setTimeout(resolve, 10000));
+const fetchSearchResults = async (searchParams: any) => {
   const startIndex = searchParams.start || "1";
   const rsp = await fetch(
     `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParams.searchTerm}&start=${startIndex}`
@@ -12,8 +11,19 @@ export default async function WebSearchPage({ searchParams }: any) {
   if (!rsp.ok) {
     throw new Error("Something went wrong");
   }
+
   const data = await rsp.json();
   const results = data.items;
+
+  if (!results) {
+    throw new Error("No results found");
+  }
+
+  return data;
+};
+
+export default async function WebSearchPage({ searchParams }: any) {
+  const results = await fetchSearchResults(searchParams);
   if (!results) {
     return (
       <div className="flex flex-col justify-center items-center pt-10">
@@ -27,5 +37,9 @@ export default async function WebSearchPage({ searchParams }: any) {
       </div>
     );
   }
-  return <>{results && <WebSearchResults results={data} />}</>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {results && <WebSearchResults results={results} />}
+    </Suspense>
+  );
 }
