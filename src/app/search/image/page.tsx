@@ -8,7 +8,11 @@ export default async function ImageSearchPage({ searchParams }: any) {
   const rsp = await fetch(
     `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParams.searchTerm}&searchType=image&start=${startIndex}`
   );
-
+  if (rsp.status === 429) {
+    throw new Error(
+      `We apologize, but it seems that we've received ${rsp.statusText} at the moment. Please try again later. Thank you for your understanding and patience.`
+    );
+  }
   if (!rsp.ok) {
     throw new Error("Something went wrong");
   }

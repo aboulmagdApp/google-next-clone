@@ -1,6 +1,6 @@
 import WebSearchResults from "@/components/WebSearchResults";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React from "react";
 
 const fetchSearchResults = async (searchParams: any) => {
   const startIndex = searchParams.start || "1";
@@ -8,6 +8,11 @@ const fetchSearchResults = async (searchParams: any) => {
     `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParams.searchTerm}&start=${startIndex}`
   );
 
+  if (rsp.status === 429) {
+    throw new Error(
+      `We apologize, but it seems that we've received ${rsp.statusText} at the moment. Please try again later. Thank you for your understanding and patience.`
+    );
+  }
   if (!rsp.ok) {
     throw new Error("Something went wrong");
   }
@@ -37,9 +42,5 @@ export default async function WebSearchPage({ searchParams }: any) {
       </div>
     );
   }
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {results && <WebSearchResults results={results} />}
-    </Suspense>
-  );
+  return <>{results && <WebSearchResults results={results} />}</>;
 }
