@@ -1,5 +1,6 @@
 import "./../globals.css";
 import SearchHeader from "@/components/SearchHeader";
+import { Suspense } from "react";
 
 export default function SearchLayout({
   children,
@@ -7,9 +8,9 @@ export default function SearchLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <Suspense>
       <SearchHeader />
       {children}
-    </div>
+    </Suspense>
   );
 }
