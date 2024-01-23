@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function CountryLookup() {
@@ -6,7 +7,9 @@ export default function CountryLookup() {
   return (
     <div className="flex justify-between">
       {country}
-      <p>cloned by: Mohamed Aboulmagd</p>
+      <Link href="https://github.com/aboulmagdApp/google-next-clone">
+        cloned by: Mohamed Abouelmagd for learning purpose
+      </Link>
     </div>
   );
 }
